@@ -1,0 +1,4 @@
+-lib heaps
+-lib hlsdl
+-main Game
+-hl game.hl
