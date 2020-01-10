@@ -24,9 +24,9 @@ class Game extends hxd.App {
 		Res.initEmbed();
 
 		// Charge la resource
-		var font = FontBuilder.getFont("Pixellari.ttf", 128);
+		// var font = FontBuilder.getFont("Pixellari.ttf", 128);
 		// Creation d'un text
-		text = new Text(font, s2d);
+		text = new Text(DefaultFont.get(), s2d);
 		text.text = "Hello World";
 		text.textColor = 0xFF0000;
 
