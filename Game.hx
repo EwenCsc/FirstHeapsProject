@@ -33,5 +33,8 @@ class Game extends hxd.App {
 	}
 	
 	override function update(dt:Float) {
+		for(e in entities){
+			e.Update();
+		}
 	}
 }
