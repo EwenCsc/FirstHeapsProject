@@ -4,11 +4,10 @@ import h2d.Object;
 class Entity extends h2d.Drawable {
     
     var drawable : h2d.Drawable;
-    var position : h2d.col.Point;
+    var velocity : h2d.col.Point;
 
-    public function new(_spriteSheet:h2d.Tile, _nbSprite:Int, _parent:h2d.Object) {
+    public function new(_parent:h2d.Object, _spriteSheet:h2d.Tile, ?_nbSprite:Int = 0, ?_animSpeed:Float = 15) {
         super(_parent);
-        position = new h2d.col.Point(100, 100);
         if (_nbSprite > 0) {
 
             var anims:Array<h2d.Tile> = [];
@@ -18,19 +17,18 @@ class Entity extends h2d.Drawable {
                     i * _spriteSheet.width / _nbSprite, 0, 
                     _spriteSheet.width / _nbSprite, _spriteSheet.height));
             }
-            drawable = new h2d.Anim(anims, 15, _parent);
+            drawable = new h2d.Anim(anims, _animSpeed, _parent);
         }
         else {
             drawable = new h2d.Bitmap(_spriteSheet, _parent);
         }
-        drawable.setPosition(position.x, position.y);
+        drawable.setPosition(100, 100);
     }
 
-    public function Init() {
+    public function init() {
         
     }
 
-    public function Update() {
-        
+    public function update() {
     }
 }
