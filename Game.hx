@@ -1,5 +1,5 @@
 package;
-
+import h2d.*;
 import hxd.App;
 import hxd.Res;
 
@@ -12,8 +12,14 @@ class Game extends hxd.App {
 	
 	override function init() {
 		Res.initEmbed();
-		var player = new game.Player(s2d, Res.spaceship.toTile(), 2, 15);
-		var alien = new game.Alien(s2d, Res.alien.toTile(), 4, 10);
+		var player = new game.Player(
+			s2d, 
+			new engine.AnimationDatas(Res.spaceship.toTile(), 2, 15), 
+			new engine.AnimationDatas(Res.laser_spaceship.toTile(), 6, 15));
+
+		var alien = new game.Alien(s2d, 
+			new engine.AnimationDatas(Res.alien.toTile(), 4, 10),
+			new engine.AnimationDatas(Res.alien.toTile(), 4, 10));
 		entities.add(player);
 		entities.add(alien);
 	}

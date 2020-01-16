@@ -13,6 +13,7 @@ class Log extends h2d.Drawable{
         }
         else {
             var text = new h2d.Text(hxd.res.DefaultFont.get(), _parent);
+            text.y = Lambda.count(messages) * 10;
             text.text = _text;
             text.textColor = _color;
             messages.set(_key, text);       

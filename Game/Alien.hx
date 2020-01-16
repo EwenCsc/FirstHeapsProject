@@ -5,8 +5,8 @@ import h2d.Object;
  * TODO: Spawner
  * TODO: AI
  */
-class Alien extends engine.Entity{
-    public function new(_parent:h2d.Object, _spriteSheet:h2d.Tile, ?_nbSprite:Int = 0, ?_animSpeed:Float = 15) {
-        super(_parent, _spriteSheet, _nbSprite, _animSpeed); 
+class Alien extends game.Ship{
+    public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas, _laserAnimDatas:engine.AnimationDatas) {
+        super(_parent, _animDatas, _laserAnimDatas); 
     }
 }

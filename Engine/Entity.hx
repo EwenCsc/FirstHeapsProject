@@ -1,28 +1,42 @@
 package engine;
+import h2d.*;
 import h2d.Object;
 
 /** extends drawable to draw automaticly on the scene 
  *  TODO: Adding bounds if not already exists
- *  TODO: Shooting lasers
- *  TODO: Stats like life, speed, power etc etc
  */
 class Entity extends h2d.Drawable {
     
     private var drawable : h2d.Drawable;
     private var velocity : h2d.col.Point;
-    private var moveSpeed : Float;
+    
+    public var localPosition(get, set) : h2d.col.Point;
+    public function get_localPosition() {
+        return new h2d.col.Point(x, y);
+    }
+    public function set_localPosition(_p:h2d.col.Point) {
+        x += _p.x;
+        y += _p.y;
+        return new h2d.col.Point(x, y);
+    }
 
-    public function new(_parent:h2d.Object, _spriteSheet:h2d.Tile, ?_nbSprite:Int = 0, ?_animSpeed:Float = 15) {
+    public var globalPosition(get, null) : h2d.col.Point;
+    public function get_globalPosition() {
+        trace(localPosition);
+        return localToGlobal(localPosition);
+    }
+
+    public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas) {
         super(_parent);
 
         /** Parsing To set drawable as Anim or just Bitmap */
-        if (_nbSprite > 0) {
+        if (_animDatas.nbSprite > 0) {
 
             var anims:Array<h2d.Tile> = [];
-            var spriteWidth = _spriteSheet.width / _nbSprite;
-            var spriteHeight = _spriteSheet.height; 
-            for(i in 0..._nbSprite) {
-                var sprite = _spriteSheet.sub(
+            var spriteWidth = _animDatas.spriteSheet.width / _animDatas.nbSprite;
+            var spriteHeight = _animDatas.spriteSheet.height; 
+            for(i in 0..._animDatas.nbSprite) {
+                var sprite = _animDatas.spriteSheet.sub(
                     i * spriteWidth, 0, 
                     spriteWidth, spriteHeight);
                 // Center the tile's pivot
@@ -34,10 +48,10 @@ class Entity extends h2d.Drawable {
              * parent = this to have this as parent ... 
              * !...Well done Ewen you're a genius
              **/ 
-            drawable = new h2d.Anim(anims, _animSpeed, this);
+            drawable = new h2d.Anim(anims, _animDatas.animSpeed, this);
         }
         else {
-            var btm = new h2d.Bitmap(_spriteSheet, this);
+            var btm = new h2d.Bitmap(_animDatas.spriteSheet, this);
             btm.tile.setCenterRatio();
             drawable = btm;
         }
