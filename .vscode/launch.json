@@ -15,17 +15,17 @@
                 "args": "active configuration"
             }
         },
-        // {
-        //     "name": "HashLink (attach)",
-        //     "request": "attach",
-        //     "port": 6112,
-        //     "type": "hl",
-        //     "hxml": "game.hxml",
-        //     "cwd": "${workspaceRoot}",
-        //     "preLaunchTask": {
-        //         "type": "haxe",
-        //         "args": "active configuration"
-        //     }
-        // }
+        {
+            "name": "HashLink (attach)",
+            "request": "attach",
+            "port": 6112,
+            "type": "hl",
+            "hxml": "game.hxml",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": {
+                "type": "haxe",
+                "args": "active configuration"
+            }
+        }
     ]
 }

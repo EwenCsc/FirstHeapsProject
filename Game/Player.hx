@@ -22,8 +22,7 @@ class Player extends engine.Entity{
         if (hxd.Key.isDown(hxd.Key.DOWN)) {
             velocity.y += 5;
         }
-        var str = "Player Position : (" + Std.string(drawable.x) + ", " + Std.string(drawable.y) + ");";
-        engine.Log.addLog(str, 0xFF0000, "playerPos", parent);
         drawable.move(velocity.x, velocity.y);
+        engine.Log.addLog("Player Position : (" + Std.string(drawable.x) + ", " + Std.string(drawable.y) + ");", 0xFF0000, "playerPos", parent);
     }
 }
