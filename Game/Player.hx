@@ -13,12 +13,12 @@ class Player extends game.Ship{
     }
 
     override function update() {
+        super.update();
         movement();
         if (hxd.Key.isDown(hxd.Key.SPACE) && lasers.length < 1) {
             shoot();
         }
-        super.update();
-        engine.Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount", parent);    
+        engine.Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount", getScene());    
     }
 
     private function movement() {
@@ -32,7 +32,7 @@ class Player extends game.Ship{
         }
         x += velocity.x;
         
-        engine.Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos", parent);
+        engine.Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos", getScene());
         
     }
 }

@@ -1,5 +1,6 @@
 package engine;
 import h2d.*;
+import hxd.*;
 import h2d.Object;
 
 /** extends drawable to draw automaticly on the scene 

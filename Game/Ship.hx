@@ -1,5 +1,7 @@
 package game;
 
+import engine.*;
+
 /** Player and Aliens
  *  TODO: Shooting lasers
  *  TODO: Stats like life, speed, power etc etc
@@ -28,7 +30,7 @@ class Ship extends engine.Entity {
     }
 
     private function shoot() {
-        lasers.add(new Laser(this, laserAnimationData));
+        lasers.add(new Laser(getScene(), localPosition, laserAnimationData));
     }
 
     public function receiveDamage(_damage:Float) {

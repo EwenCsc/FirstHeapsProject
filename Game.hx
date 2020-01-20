@@ -5,6 +5,7 @@ import hxd.Res;
 
 class Game extends hxd.App {
 	private var entities = new List<engine.Entity>();
+    public static var currentScene : h2d.Scene;
     
 	static function main() {
 		new Game();
@@ -12,6 +13,7 @@ class Game extends hxd.App {
 	
 	override function init() {
 		Res.initEmbed();
+		currentScene = s2d;
 		var player = new game.Player(
 			s2d, 
 			new engine.AnimationDatas(Res.spaceship.toTile(), 2, 15), 
