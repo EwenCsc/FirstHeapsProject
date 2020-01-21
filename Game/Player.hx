@@ -1,5 +1,6 @@
 package game;
 import h2d.Object;
+import h2d.col.*;
 
  /**
   * TODO: Limiting pos to the screen
@@ -15,10 +16,10 @@ class Player extends game.Ship{
     override function update() {
         super.update();
         movement();
-        if (hxd.Key.isDown(hxd.Key.SPACE) && lasers.length < 1) {
+        if (hxd.Key.isDown(hxd.Key.SPACE)) {
             shoot();
         }
-        engine.Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount", getScene());    
+        engine.Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount"/*, getScene()*/);    
     }
 
     private function movement() {
@@ -32,7 +33,7 @@ class Player extends game.Ship{
         }
         x += velocity.x;
         
-        engine.Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos", getScene());
+        engine.Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos"/*, getScene()*/);
         
     }
 }

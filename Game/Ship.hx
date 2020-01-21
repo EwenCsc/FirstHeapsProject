@@ -13,9 +13,13 @@ class Ship extends engine.Entity {
     private var life : Float;
     private var moveSpeed : Float;
 
+    private var shootingCooldown : Float;
+    private var currentShootingTimer : Float;
+
     public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas, _laserAnimDatas:engine.AnimationDatas) {
         super(_parent, _animDatas);
         laserAnimationData = _laserAnimDatas;
+        currentShootingTimer = 0;
     }
 
     public override function update() {
@@ -24,13 +28,16 @@ class Ship extends engine.Entity {
             l.update();
             if(l.toDestroy) {
                 lasers.remove(l);
-                removeChild(l);
+                removeChild(l); 
+                l.remove(); 
             }
         }
     }
 
     private function shoot() {
-        lasers.add(new Laser(getScene(), localPosition, laserAnimationData));
+        if (currentShootingTimer == 0) {
+            lasers.add(new Laser(getScene(), localPosition, laserAnimationData));
+        }
     }
 
     public function receiveDamage(_damage:Float) {
