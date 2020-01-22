@@ -1,5 +1,6 @@
-package engine;
+package myEngine;
 
+// import myEngine.*;
 import h2d.*;
 import hxd.*;
 import h2d.Object;
@@ -16,7 +17,7 @@ class Entity extends h2d.Drawable {
 
     public var globalPosition(get, null) : h2d.col.Point;
 
-    public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas) {
+    public function new(_parent:h2d.Object, _animDatas:myEngine.AnimationDatas) {
         // try {
         //     cast(_parent, h2d.Scene);
         //     throw "Attention le parent de l'entité n'est pas une Scene";
@@ -66,11 +67,10 @@ class Entity extends h2d.Drawable {
     public function update() {
     }
 
-    override function getScene() : Scene {
+    private override function getScene() : Scene {
         return Game.currentScene;
     }
 
-    
     public function get_localPosition() {
         return new h2d.col.Point(x, y);
     }

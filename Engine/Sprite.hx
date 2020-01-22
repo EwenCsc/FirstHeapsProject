@@ -1,4 +1,6 @@
-package engine;
+package myEngine;
+
+import myEngine.*;
 
 class Sprite extends engine.Component {
 

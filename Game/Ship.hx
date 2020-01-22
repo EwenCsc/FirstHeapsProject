@@ -1,12 +1,12 @@
 package game;
 
-import engine.*;
+import myEngine.*;
 
 /** Player and Aliens
  *  TODO: Shooting lasers
  *  TODO: Stats like life, speed, power etc etc
  */
-class Ship extends engine.Entity {
+class Ship extends myEngine.Entity {
 
     private var laserAnimationData : engine.AnimationDatas;
     private var lasers = new List<Laser>();

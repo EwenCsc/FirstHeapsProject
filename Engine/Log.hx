@@ -1,4 +1,6 @@
-package engine;
+package myEngine;
+
+import myEngine.*;
 import h2d.Object;
 import  haxe.Constraints;
 

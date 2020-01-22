@@ -1,8 +1,10 @@
 package game;
+
+import myEngine.*;
 import hxd.*;
 import h2d.Object;
 
-class Laser extends engine.Entity {
+class Laser extends myEngine.Entity {
 
     public var toDestroy : Bool;
 
