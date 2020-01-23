@@ -15,6 +15,7 @@ class GameManager extends Manager {
 
     public override function init() {
 		super.init();
+		entities = new List<Entity>();
 		var player = new Player(Main.currentScene, 
 			new AnimationDatas(Res.spaceship.toTile(), 2, 15), 
 			new AnimationDatas(Res.laser_spaceship.toTile(), 6, 15));

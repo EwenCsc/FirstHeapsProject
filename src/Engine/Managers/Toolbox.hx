@@ -27,6 +27,9 @@ class Toolbox {
     }
 
     public function init() {
+        managers = new Map<ManagersType, Manager>();
+        unremovables = new List<ManagersType>();
+
         addManager(ManagersType.DataManager, true);
         addManager(ManagersType.GameManager, true);
         addManager(ManagersType.TimeManager, true);
