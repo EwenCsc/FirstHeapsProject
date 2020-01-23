@@ -1,6 +1,6 @@
-package myEngine;
+package engine;
 
-import myEngine.*;
+import engine.*;
 
 class Component {
 

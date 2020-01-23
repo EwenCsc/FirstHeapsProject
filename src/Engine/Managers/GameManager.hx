@@ -1,24 +1,33 @@
+package engine.managers;
 
+import game.*;
+import engine.*;
+import engine.managers.*;
+import hxd.*;
 
 class GameManager extends Manager {
+	
 	private var entities : List<Entity>;
 
-    public function new() {
-        
+    public override function new() {
+        super();
     }
 
-    override public function init() {
-		var player = new Player(s2d, 
+    public override function init() {
+		super.init();
+		var player = new Player(Main.currentScene, 
 			new AnimationDatas(Res.spaceship.toTile(), 2, 15), 
 			new AnimationDatas(Res.laser_spaceship.toTile(), 6, 15));
 
-		var alien = new Alien(s2d, 
+		var alien = new Alien(Main.currentScene, 
 			new AnimationDatas(Res.alien.toTile(), 4, 10),
 			new AnimationDatas(Res.alien.toTile(), 4, 10));
 		entities.add(player);
 		entities.add(alien);
-    }
-    override function update() {
+	}
+	
+    public override function update() {
+		super.update();
 		for(e in entities){
 			e.update();
 		}

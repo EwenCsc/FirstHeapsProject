@@ -1,14 +1,15 @@
 package game;
 
-import myEngine.*;
+import game.*;
+import engine.*;
 
 /** Player and Aliens
  *  TODO: Shooting lasers
  *  TODO: Stats like life, speed, power etc etc
  */
-class Ship extends myEngine.Entity {
+class Ship extends Entity {
 
-    private var laserAnimationData : engine.AnimationDatas;
+    private var laserAnimationData : AnimationDatas;
     private var lasers = new List<Laser>();
     private var life : Float;
     private var moveSpeed : Float;
@@ -16,7 +17,7 @@ class Ship extends myEngine.Entity {
     private var shootingCooldown : Float;
     private var currentShootingTimer : Float;
 
-    public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas, _laserAnimDatas:engine.AnimationDatas) {
+    public function new(_parent:h2d.Object, _animDatas:AnimationDatas, _laserAnimDatas:AnimationDatas) {
         super(_parent, _animDatas);
         laserAnimationData = _laserAnimDatas;
         currentShootingTimer = 0;

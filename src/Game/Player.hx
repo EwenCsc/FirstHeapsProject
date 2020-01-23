@@ -1,4 +1,7 @@
 package game;
+
+import game.*;
+import engine.*;
 import h2d.Object;
 import h2d.col.*;
 
@@ -7,7 +10,7 @@ import h2d.col.*;
   */
 class Player extends game.Ship{
      
-    public function new(_parent:h2d.Object, _animDatas:engine.AnimationDatas, _laserAnimDatas:engine.AnimationDatas) {
+    public function new(_parent:h2d.Object, _animDatas:AnimationDatas, _laserAnimDatas:AnimationDatas) {
         super(_parent, _animDatas, _laserAnimDatas);
         x = cast(_parent, h2d.Scene).width / 2;
         y = cast(_parent, h2d.Scene).height / 1.2;
@@ -19,7 +22,7 @@ class Player extends game.Ship{
         if (hxd.Key.isDown(hxd.Key.SPACE)) {
             shoot();
         }
-        engine.Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount"/*, getScene()*/);    
+        Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount"/*, getScene()*/);    
     }
 
     private function movement() {
@@ -33,7 +36,7 @@ class Player extends game.Ship{
         }
         x += velocity.x;
         
-        engine.Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos"/*, getScene()*/);
+        Log.addLog("Player Position : (" + Std.string(x) + ", " + Std.string(y) + ");", 0xFF0000, "playerPos"/*, getScene()*/);
         
     }
 }

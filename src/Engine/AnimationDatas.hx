@@ -1,6 +1,6 @@
-package myEngine;
+package engine;
 
-import myEngine.*;
+import engine.*;
 
 class AnimationDatas {
     public var spriteSheet:h2d.Tile;

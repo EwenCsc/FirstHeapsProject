@@ -1,0 +1,9 @@
+-lib heaps
+-lib hlsdl
+-cp src
+-cp src/Engine
+-cp src/Engine/Managers
+-D analyzer-optimize
+-main Main
+-hl main.hl
+# --interp

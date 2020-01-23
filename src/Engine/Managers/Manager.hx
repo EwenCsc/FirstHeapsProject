@@ -1,8 +1,9 @@
-package myEngine;
+package engine.managers;
 
-import myEngine.*;
+import engine.*;
+import engine.managers.*;
 
-abstract Manager(null) {
+class Manager {
     private function new() {
         
     }

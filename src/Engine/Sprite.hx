@@ -1,8 +1,8 @@
-package myEngine;
+package engine;
 
-import myEngine.*;
+import engine.*;
 
-class Sprite extends engine.Component {
+class Sprite extends Component {
 
     private var spriteSheet : h2d.Tile;
     private var customGraphics : h2d.Graphics;
