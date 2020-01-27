@@ -3,6 +3,7 @@ package game;
 import game.*;
 import engine.*;
 import engine.managers.*;
+import haxe_helper.*;
 
 
 /** Player and Aliens
@@ -19,23 +20,22 @@ class Ship extends Entity {
     private var shootingCooldown : Float;
     private var currentShootingTimer : Float;
 
-    public var onCollide : List<Void -> Void>;
+    public var onCollide : Delegate;
 
     public function new(_parent:h2d.Object, _animDatas:AnimationDatas, _laserAnimDatas:AnimationDatas) {
         super(_parent, _animDatas);
         laserAnimationData = _laserAnimDatas;
         shootingCooldown = 0.1;
         currentShootingTimer = 0;
-        onCollide = new List<Void -> Void>();
-        onCollide.add( function(){
+        
+        onCollide = new Delegate();
+        onCollide += (function(){
             trace("okokok");
         });
-        onCollide.add( function(){
+        onCollide += ( function(){
             trace("okokok2");
         });
-        for(v in onCollide) {
-            v();
-        }
+        onCollide.invoke();
     }
 
     private function bite() {
