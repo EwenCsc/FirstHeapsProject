@@ -1,8 +1,9 @@
 -lib heaps
 -lib hlsdl
 -cp src
--cp src/Engine
--cp src/Engine/Managers
+-cp src/haxe_helper
+-cp src/engine
+-cp src/engine/managers
 -D analyzer-optimize
 -main Main
 -hl main.hl

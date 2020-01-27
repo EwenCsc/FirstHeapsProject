@@ -16,10 +16,10 @@ class Main  extends hxd.App {
 	override function init() {
 		Res.initEmbed();
 		currentScene = s2d;
-		Toolbox.instance.init();
+		GameManager.instance.init();
 	}
 	
 	override function update(dt:Float) {
-		Toolbox.instance.update();
+		GameManager.instance.update();
 	}
 }

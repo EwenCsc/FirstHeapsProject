@@ -6,15 +6,23 @@ import hxd.*;
 
 class TimeManager extends Manager {
     
+    public static var instance (get, null) : TimeManager = null;
+    public static function get_instance() {
+        if (instance == null){
+            instance = new TimeManager();
+        }
+        return instance;
+    }
+    
     public var deltaTime(get, null) : Float;
 
-    public override function new() {
+    private override function new() {
         super();
     }
 
     public override function init() {
         super.init();
-        Log.addLog("fps : " + Timer.fps(), 0xFF0000, "fps");
+        Log.addLog("fps : " + cast(Timer.fps(), Int), 0xFF0000, "fps");
     }
 
     public override function update() {
