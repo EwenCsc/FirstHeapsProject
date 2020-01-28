@@ -1,38 +1,50 @@
 package haxe_helper;
 
-import hl.Profile.Result;
-
-// abstract Delegate<T>(Array<Dynamic>) {
-class Delegate/*<T>*/ {
+class Delegate {
     
-    private var callbacks : List<Array<Dynamic> -> Void>;
+    // private var callbacks : List<Array<Dynamic> -> Void>;
+    public var callbacks : List<Void -> Void>;
     
-    public function new(?_callbacks : List<Array<Dynamic> -> Void>) {
-        if (_callbacks != null)
+    public function new(?_callbacks : List<Void -> Void>) {
+        if (_callbacks != null){
             callbacks = _callbacks;
-        else 
-            callbacks = new List<Array<Dynamic> -> Void>();
-    }
-
-    @:op(A += B)
-    public function addassign(lhs:List<Array<Dynamic> -> Void>, rhs:Array<Dynamic> -> Void) : List<Array<Dynamic> -> Void> {
-        lhs.add(rhs);
-        return lhs;
+        }
+        else{
+            callbacks = new List<Void -> Void>();
+        }
     }
     
     @:op(A = B)
-    public function assign(lhs:List<Array<Dynamic> -> Void>, ?rhs : Array<Dynamic> -> Void) : List<Array<Dynamic> -> Void> {
-        var result = new List<Array<Dynamic> -> Void>();
+    public function assign(lhs:Delegate, ?rhs : Void -> Void) : Delegate {
+        lhs.callbacks = new List<Void -> Void>();
         if (rhs != null) {
-            result.add(rhs);
+            lhs.callbacks.add(rhs);
         }
-        return result;
+        return lhs;
     }
 
-    public function invoke(?param:Array<Dynamic>) {
+    @:op(A + B)
+    public function add(lhs:Delegate, rhs:Void -> Void) : Delegate {
+        lhs.callbacks.add(rhs);
+        return lhs;
+    }
+
+    @:op(A += B)
+    public inline function addassign(/*lhs:Delegate,*/ rhs:() -> Void) /*: Delegate*/ {
+        // lhs.callbacks.add(rhs);
+        callbacks.add(rhs);
+        // return lhs;
+        // return new Delegate(callbacks);
+    }
+    
+    // public function addassign2(rhs:Void -> Void){
+    //     callbacks.add(rhs);
+    // }
+
+    public function invoke() {
         if (callbacks.length > 0) {
             for (callback in callbacks) {
-                callback(param);
+                callback();
             }
         }
     } 

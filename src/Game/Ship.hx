@@ -28,18 +28,13 @@ class Ship extends Entity {
         shootingCooldown = 0.1;
         currentShootingTimer = 0;
         
-        onCollide = new Delegate();
-        onCollide += (function(){
-            trace("okokok");
-        });
-        onCollide += ( function(){
-            trace("okokok2");
-        });
-        onCollide.invoke();
-    }
+        var annon = function() { trace("._."); };
 
-    private function bite() {
-        trace("ok delegate");
+        onCollide = new Delegate();
+        onCollide.callbacks.add(annon);
+        onCollide += annon;
+        onCollide.addassign(annon);
+        onCollide.invoke();
     }
 
     public override function update() {
