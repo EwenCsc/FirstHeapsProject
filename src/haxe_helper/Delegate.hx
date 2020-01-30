@@ -1,51 +1,45 @@
 package haxe_helper;
 
-class Delegate {
+/**
+ * To overload operators you need to do an abstract class
+ * And the "=" operator can't be overloaded
+ * 
+ * For op overloading doc :
+ * ? http://haxedev.wikidot.com/article:operator-overloading
+ * ? http://haxedev.wikidot.com/article:operator-overloading-cheatsheet
+ */
+abstract Delegate(List<Void -> Void>) {
     
-    // private var callbacks : List<Array<Dynamic> -> Void>;
-    public var callbacks : List<Void -> Void>;
-    
-    public function new(?_callbacks : List<Void -> Void>) {
+    public function new(?_callbacks : List<Void -> Void>, ?_callback : Void -> Void) {
+        this = new List<Void -> Void>();
         if (_callbacks != null){
-            callbacks = _callbacks;
+            this = _callbacks;
         }
-        else{
-            callbacks = new List<Void -> Void>();
+        else  if (_callback != null) {
+            this.add(_callback);
         }
-    }
-    
-    @:op(A = B)
-    public function assign(lhs:Delegate, ?rhs : Void -> Void) : Delegate {
-        lhs.callbacks = new List<Void -> Void>();
-        if (rhs != null) {
-            lhs.callbacks.add(rhs);
-        }
-        return lhs;
-    }
-
-    @:op(A + B)
-    public function add(lhs:Delegate, rhs:Void -> Void) : Delegate {
-        lhs.callbacks.add(rhs);
-        return lhs;
     }
 
     @:op(A += B)
-    public inline function addassign(/*lhs:Delegate,*/ rhs:() -> Void) /*: Delegate*/ {
-        // lhs.callbacks.add(rhs);
-        callbacks.add(rhs);
-        // return lhs;
-        // return new Delegate(callbacks);
+    public inline function addassign(rhs:Void -> Void) : Delegate {
+        this.add(rhs);
+        return new Delegate(this);
     }
-    
-    // public function addassign2(rhs:Void -> Void){
-    //     callbacks.add(rhs);
-    // }
 
     public function invoke() {
-        if (callbacks.length > 0) {
-            for (callback in callbacks) {
+        if (this.length > 0) {
+            for (callback in this) {
                 callback();
             }
         }
     } 
+
+    public function clear() {
+        this.clear();
+    }
+
+    public function invokeOnce() {
+        invoke();
+        clear();
+    }
 }
