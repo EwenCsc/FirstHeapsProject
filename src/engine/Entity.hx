@@ -21,9 +21,9 @@ class Entity extends h2d.Drawable {
     private static var colliderDebug : Bool = true;
     private var colliderRectangle : Drawable;
 
-    public var onCollisionEnter : Delegate;
-    public var onCollisionStay : Delegate;
-    public var onCollisionExit : Delegate;
+    public var onCollisionEnterDelegate : Delegate;
+    public var onCollisionStayDelegate : Delegate;
+    public var onCollisionExitDelegate : Delegate;
 
     public function new(_parent:h2d.Object, _animDatas:AnimationDatas) {
         // try {
@@ -80,15 +80,31 @@ class Entity extends h2d.Drawable {
     }
 
     public function init() {
-        onCollisionEnter = new Delegate();
-        onCollisionStay = new Delegate();
-        onCollisionExit = new Delegate();
+        onCollisionEnterDelegate = new Delegate();
+        onCollisionStayDelegate = new Delegate();
+        onCollisionExitDelegate = new Delegate();
+
+        onCollisionEnterDelegate += onCollisionEnter;
+        onCollisionStayDelegate += onCollisionStay;
+        onCollisionExitDelegate  += onCollisionExit;
     }
 
     public function update() {
-        onCollisionEnter.invoke();
-        onCollisionStay.invoke();
-        onCollisionExit.invoke();
+        onCollisionEnterDelegate.invoke();
+        onCollisionStayDelegate.invoke();
+        onCollisionExitDelegate.invoke();
+    }
+
+    public function onCollisionEnter() {
+        setColliderColor(new h3d.Vector(1, 0, 0, 1).toColor());
+    }
+
+    public function onCollisionStay() {
+        
+    }
+
+    public function onCollisionExit() {
+        setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
     }
 
     public function setColliderColor(_color : Int) {
