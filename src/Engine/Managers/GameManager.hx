@@ -15,7 +15,7 @@ class GameManager extends Manager {
         return instance;
 	}
 	
-	private var entities : List<Entity>;
+	public var entities(default, null): List<Entity>;
 
     private override function new() {
         super();

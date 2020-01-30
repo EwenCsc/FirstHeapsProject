@@ -1,12 +1,14 @@
 package engine;
 
+import haxe_helper.Delegate;
+import h2d.col.Bounds;
 import engine.*;
 import h2d.*;
 import hxd.*;
 import h2d.Object;
 
 /** extends drawable to draw automaticly on the scene 
- *  TODO: Adding bounds if not already exists
+ *  
  */
 class Entity extends h2d.Drawable {
     
@@ -14,8 +16,14 @@ class Entity extends h2d.Drawable {
     private var velocity : h2d.col.Point;
     
     public var localPosition(get, set) : h2d.col.Point;
-
     public var globalPosition(get, null) : h2d.col.Point;
+
+    private static var colliderDebug : Bool = true;
+    private var colliderRectangle : Drawable;
+
+    public var onCollisionEnter : Delegate;
+    public var onCollisionStay : Delegate;
+    public var onCollisionExit : Delegate;
 
     public function new(_parent:h2d.Object, _animDatas:AnimationDatas) {
         // try {
@@ -27,6 +35,14 @@ class Entity extends h2d.Drawable {
         //     throw "Attention le parent de l'entité n'est pas un Drawble, il ne va pas s'afficher ...";
         // }
         super(_parent);
+        parent = _parent;
+
+        initGraphic(_animDatas);
+
+        init();
+    }
+
+    private function initGraphic (_animDatas:AnimationDatas) {
 
         /** Parsing To set drawable as Anim or just Bitmap */
         if (_animDatas.nbSprite > 0) {
@@ -58,13 +74,41 @@ class Entity extends h2d.Drawable {
             btm.tile.setCenterRatio();
             drawable = btm;
         }
+        
+        // Debug Colliders
+        setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
     }
 
     public function init() {
-        
+        onCollisionEnter = new Delegate();
+        onCollisionStay = new Delegate();
+        onCollisionExit = new Delegate();
     }
 
     public function update() {
+        onCollisionEnter.invoke();
+        onCollisionStay.invoke();
+        onCollisionExit.invoke();
+    }
+
+    public function setColliderColor(_color : Int) {
+        if (colliderDebug) {
+            var thickness = 1;
+            var w = cast(getBounds().getSize().x, Int);
+            var h = cast(getBounds().getSize().y, Int);
+            // var color = new h3d.Vector(0, 1, 0, 1).toColor();
+            
+            var bmpd = new hxd.BitmapData(w, h);
+            bmpd.fill(0, 0,             w, thickness, _color); // Up
+            bmpd.fill(0, h - thickness, w, thickness, _color); // Down
+            bmpd.fill(0, 0,             thickness, h, _color); // Left
+            bmpd.fill(w - thickness, 0, thickness, h, _color); // Right
+
+            var btm = new Bitmap(Tile.fromBitmap(bmpd), this);
+            btm.tile.setCenterRatio();
+            colliderRectangle = btm;
+            bmpd.dispose();
+        }
     }
 
     public override function getScene() : Scene {
@@ -74,6 +118,7 @@ class Entity extends h2d.Drawable {
     public function get_localPosition() {
         return new h2d.col.Point(x, y);
     }
+
     public function set_localPosition(_p:h2d.col.Point) {
         x += _p.x;
         y += _p.y;

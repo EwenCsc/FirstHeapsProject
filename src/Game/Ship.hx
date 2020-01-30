@@ -34,6 +34,7 @@ class Ship extends Entity {
         // onCollide += annon;
         // onCollide.addassign(annon);
         // onCollide.invoke();
+        // onCollide.clear();
     }
 
     public override function update() {
@@ -55,7 +56,7 @@ class Ship extends Entity {
     private function shoot() {
         if (currentShootingTimer == 0) {
             currentShootingTimer = shootingCooldown;
-            lasers.add(new Laser(getScene(), localPosition, laserAnimationData));
+            lasers.add(new Laser(getScene(), localPosition, laserAnimationData, this));
         }
     }
 

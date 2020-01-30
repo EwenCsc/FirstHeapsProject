@@ -1,0 +1,12 @@
+- Collisions (need delegates)
+- alien's behaviour : 
+	- Moving
+ 	- Shooting
+ 	- Wave
+- Background (paralax)
+- UI :
+ 	- Score
+ 	- Life
+ 	- Wave 
+ 	- ...
+....
