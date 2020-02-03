@@ -25,6 +25,7 @@ class GameManager extends Manager {
 		super.init();
 		DataManager.instance.init();
 		TimeManager.instance.init();
+		PhysicManager.instance.init();
 
 		entities = new List<Entity>();
 		var player = new Player(Main.currentScene); 
@@ -36,6 +37,7 @@ class GameManager extends Manager {
 	
     public override function update() {
 		TimeManager.instance.update();
+		PhysicManager.instance.update();
 		super.update();
 		for(e in entities){
 			e.update();

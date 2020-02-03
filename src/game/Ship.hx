@@ -56,7 +56,9 @@ class Ship extends Entity {
     private function shoot() {
         if (currentShootingTimer == 0) {
             currentShootingTimer = shootingCooldown;
-            lasers.add(new Laser(getScene(), localPosition, laserAnimationData, this));
+            var l = new Laser(getScene(), localPosition, laserAnimationData, this);
+            lasers.add(l);
+            GameManager.instance.entities.add(l);
         }
     }
 

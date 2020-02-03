@@ -12,6 +12,9 @@ import h2d.Object;
  */
 class Entity extends h2d.Drawable {
     
+    private var collidingObjects : List<Entity>;
+    private var collidingObjectsThisFrame : List<Entity>;
+
     private var drawable : h2d.Drawable;
     private var velocity : h2d.col.Point;
     
@@ -80,31 +83,50 @@ class Entity extends h2d.Drawable {
     }
 
     public function init() {
+        collidingObjects = new List<Entity>();
+        collidingObjectsThisFrame = new List<Entity>();
         onCollisionEnterDelegate = new Delegate();
         onCollisionStayDelegate = new Delegate();
         onCollisionExitDelegate = new Delegate();
-
-        onCollisionEnterDelegate += onCollisionEnter;
-        onCollisionStayDelegate += onCollisionStay;
-        onCollisionExitDelegate  += onCollisionExit;
     }
 
     public function update() {
-        onCollisionEnterDelegate.invoke();
-        onCollisionStayDelegate.invoke();
-        onCollisionExitDelegate.invoke();
-    }
-
-    public function onCollisionEnter() {
-        setColliderColor(new h3d.Vector(1, 0, 0, 1).toColor());
-    }
-
-    public function onCollisionStay() {
         
     }
 
-    public function onCollisionExit() {
-        setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
+    public function onCollisionEnter(_obj : Entity) : Bool {
+        if (_obj != this && collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() == null){
+            collidingObjects.add(_obj);
+            collidingObjectsThisFrame.add(_obj);
+
+            onCollisionEnterDelegate.invoke();
+            return true;
+        }
+        return false;
+    }
+
+    public function onCollisionStay(_obj : Entity) : Bool {
+        if (_obj != this && collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() != null){
+            collidingObjectsThisFrame.add(_obj);
+
+            onCollisionStayDelegate.invoke();
+            return true;
+        }
+        return false;
+    }
+
+    public function onCollisionExit(_obj : Entity) : Bool {
+        if (_obj != this && 
+            collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() != null &&
+            collidingObjectsThisFrame.filter(function (e:Entity){ return e == _obj; }).first() == null){
+
+            collidingObjects.remove(_obj);
+            onCollisionExitDelegate.invoke();
+
+            collidingObjectsThisFrame.clear();
+            return true;
+        }
+        return false;
     }
 
     public function setColliderColor(_color : Int) {
@@ -112,7 +134,6 @@ class Entity extends h2d.Drawable {
             var thickness = 1;
             var w = cast(getBounds().getSize().x, Int);
             var h = cast(getBounds().getSize().y, Int);
-            // var color = new h3d.Vector(0, 1, 0, 1).toColor();
             
             var bmpd = new hxd.BitmapData(w, h);
             bmpd.fill(0, 0,             w, thickness, _color); // Up
@@ -144,5 +165,9 @@ class Entity extends h2d.Drawable {
     public function get_globalPosition() {
         trace(localPosition);
         return localToGlobal(localPosition);
+    }
+
+    public function intersects(ent : Entity):Bool {
+        return getBounds().intersects(ent.getBounds());
     }
 }

@@ -21,41 +21,41 @@ class Laser extends Entity {
 
     override function update() {
         super.update();
-        y -= 5;
+        y -= 0.5;
 
         // Destruction
         if (y < 100) {
             toDestroy = true;
         }
-        collisionWithShips();
     }
 
-    private function collisionWithShips() {
-        if(Type.getClass(owner) == Player){
-            var getAliens = function(e:Entity) {
-                return Type.getClass(e) == Alien;
-            };
-            var aliens = GameManager.instance.entities.filter(getAliens);
-            if (aliens.length > 0) {
-                for (a in aliens) {
-                    if (a.getBounds().intersects(getBounds())) {
-                        a.onCollisionEnterDelegate.invoke();
-                        onCollisionEnterDelegate.invoke();
-                    }
-                }
+    override function onCollisionEnter(ent : Entity) : Bool {
+        if (super.onCollisionEnter(ent)) {
+            if(Type.getClass(ent) == Alien) {
+                setColliderColor(new h3d.Vector(1, 0, 0, 1).toColor());
             }
+            return true;
         }
-        else if(Type.getClass(owner) == Alien){
-            var getAliens = function(e:Entity) {
-                return Type.getClass(e) == Player;
-            };
-            var player = GameManager.instance.entities.filter(getAliens).first();
-            if (player != null) {
-                if (player.getBounds().intersects(getBounds())) {
-                    player.onCollisionEnterDelegate.invoke();
-                    onCollisionEnterDelegate.invoke();
-                }
+        return false;
+    }
+
+    override function onCollisionStay(ent : Entity) : Bool {
+        if (super.onCollisionStay(ent)) {
+            if(Type.getClass(ent) == Alien) {
+                setColliderColor(new h3d.Vector(1, 0.5, 0, 1).toColor());
             }
+            return true;
         }
+        return false;
+    }
+
+    override function onCollisionExit(ent : Entity)  : Bool {
+        if (super.onCollisionExit(ent)){
+            if(Type.getClass(ent) == Alien) {
+                setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
+            }
+            return true;
+        }
+        return false;
     }
 }
