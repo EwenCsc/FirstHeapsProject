@@ -32,8 +32,7 @@ class Player extends game.Ship{
     }
 
     private function log() {
-        Log.addLog("Can Shoot : " + ((currentShootingTimer == 0) ? "True" : "False"), 0xFF0000, "shootCoolDown");
-        Log.addLog("Laser Instancied : " + lasers.length, 0xFF0000, "bulletsCount");        
+        Log.addLog("Can Shoot : " + ((currentShootingTimer == 0) ? "True" : "False"), 0xFF0000, "shootCoolDown");        
     }
 
     private function movement() {

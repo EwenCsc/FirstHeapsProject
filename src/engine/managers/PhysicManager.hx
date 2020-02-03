@@ -1,5 +1,6 @@
 package engine.managers;
 
+import engine.Entity;
 import engine.managers.GameManager;
 import engine.managers.Manager;
 
@@ -22,8 +23,11 @@ class PhysicManager extends Manager {
     }
 
     public override function update() {
-        for (e1 in GameManager.instance.entities) {
-            for (e2 in GameManager.instance.entities) {
+        var list1 = GameManager.instance.entities.filter(function (e:Entity) {return e.isActivate;});
+        var list2 = GameManager.instance.entities.filter(function (e:Entity) {return e.isActivate;});
+
+        for (e1 in list1) {
+            for (e2 in list2) {
                 if (e1 != e2) {
                     if (e1.intersects(e2)) {
                         e1.onCollisionStay(e2);
@@ -37,6 +41,9 @@ class PhysicManager extends Manager {
                         e2.onCollisionExit(e1);
                     }
                 }
+            }
+            if (list2.length > 1) {
+                // list2.remove(e1);
             }
         }
     }

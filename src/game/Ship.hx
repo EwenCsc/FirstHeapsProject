@@ -43,22 +43,32 @@ class Ship extends Entity {
         currentShootingTimer -= TimeManager.instance.deltaTime;
         if (currentShootingTimer <= 0) 
             currentShootingTimer = 0;
-        for (l in lasers) {
-            l.update();
-            if(l.toDestroy) {
-                lasers.remove(l);
-                removeChild(l); 
-                l.remove(); 
-            }
-        }
+        // for (l in lasers) {
+            // l.update();
+            // if(l.toDestroy) {
+                // lasers.remove(l);
+                // removeChild(l); 
+                // l.remove(); 
+            // }
+        // }
     }
 
     private function shoot() {
         if (currentShootingTimer == 0) {
             currentShootingTimer = shootingCooldown;
-            var l = new Laser(getScene(), localPosition, laserAnimationData, this);
-            lasers.add(l);
-            GameManager.instance.entities.add(l);
+            var l = cast(GameManager.instance.entities.filter(
+                function (e:Entity){return Type.getClass(e) == Laser && !e.isActivate;}).first(), Laser);
+            if (l == null){
+                l = new Laser(getScene(), localPosition, laserAnimationData, this);
+                // lasers.add(l);
+                GameManager.instance.entities.add(l);
+            }
+            else {
+                l.x = localPosition.x;
+                l.y = localPosition.y;
+                l.owner = this;
+                l.isActivate = true;
+            }
         }
     }
 

@@ -36,11 +36,14 @@ class GameManager extends Manager {
 	}
 	
     public override function update() {
+		super.update();
 		TimeManager.instance.update();
 		PhysicManager.instance.update();
-		super.update();
+
 		for(e in entities){
 			e.update();
 		}
+        Log.addLog("Laser Instancied : " + entities.filter(function (e:Entity){return Type.getClass(e) == Laser;}).length, 0xFF0000, "laserInstencied");
+        Log.addLog("Laser Activated : " + entities.filter(function (e:Entity){return Type.getClass(e) == Laser && e.isActivate;}).length, 0xFF0000, "laserActivated");
 	}
 }

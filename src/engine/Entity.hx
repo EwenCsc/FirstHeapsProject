@@ -12,6 +12,8 @@ import h2d.Object;
  */
 class Entity extends h2d.Drawable {
     
+    public var isActivate = true;
+
     private var collidingObjects : List<Entity>;
     private var collidingObjectsThisFrame : List<Entity>;
 
@@ -91,7 +93,7 @@ class Entity extends h2d.Drawable {
     }
 
     public function update() {
-        
+        if (!isActivate) return;
     }
 
     public function onCollisionEnter(_obj : Entity) : Bool {
@@ -130,7 +132,7 @@ class Entity extends h2d.Drawable {
     }
 
     public function setColliderColor(_color : Int) {
-        if (colliderDebug) {
+        if (false) {
             var thickness = 1;
             var w = cast(getBounds().getSize().x, Int);
             var h = cast(getBounds().getSize().y, Int);
