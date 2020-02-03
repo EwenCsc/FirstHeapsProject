@@ -38,7 +38,7 @@ class Laser extends Entity {
     override function onCollisionEnter(ent : Entity) : Bool {
         if (super.onCollisionEnter(ent)) {
             if(Type.getClass(ent) == Alien) {
-                // setColliderColor(new h3d.Vector(1, 0, 0, 1).toColor());
+                setColliderColor(new h3d.Vector(1, 0, 0, 1).toColor());
             }
             return true;
         }
@@ -48,7 +48,7 @@ class Laser extends Entity {
     override function onCollisionStay(ent : Entity) : Bool {
         if (super.onCollisionStay(ent)) {
             if(Type.getClass(ent) == Alien) {
-                // setColliderColor(new h3d.Vector(1, 0.5, 0, 1).toColor());
+                setColliderColor(new h3d.Vector(1, 0, 1, 1).toColor());
             }
             return true;
         }
@@ -58,7 +58,7 @@ class Laser extends Entity {
     override function onCollisionExit(ent : Entity)  : Bool {
         if (super.onCollisionExit(ent)){
             if(Type.getClass(ent) == Alien) {
-                // setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
+                setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
             }
             return true;
         }

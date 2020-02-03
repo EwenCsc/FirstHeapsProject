@@ -132,7 +132,7 @@ class Entity extends h2d.Drawable {
     }
 
     public function setColliderColor(_color : Int) {
-        if (false) {
+        if (colliderDebug) {
             var thickness = 1;
             var w = cast(getBounds().getSize().x, Int);
             var h = cast(getBounds().getSize().y, Int);
