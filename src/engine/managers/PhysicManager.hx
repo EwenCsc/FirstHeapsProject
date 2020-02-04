@@ -25,7 +25,7 @@ class PhysicManager extends Manager {
     public override function update() {
         var list1 = GameManager.instance.entities.filter(function (e:Entity) {return e.isActivate;});
         var list2 = GameManager.instance.entities.filter(function (e:Entity) {return e.isActivate;});
-        trace (list1.length);
+
         for (e1 in list1) {
             for (e2 in list2) {
                 if (e1 != e2) {

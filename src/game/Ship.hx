@@ -27,14 +27,6 @@ class Ship extends Entity {
         laserAnimationData = _laserAnimDatas;
         shootingCooldown = 0.1;
         currentShootingTimer = 0;
-        
-        // Test Delegate
-        // var annon = function() { trace("._."); };
-        // onCollide = new Delegate();
-        // onCollide += annon;
-        // onCollide.addassign(annon);
-        // onCollide.invoke();
-        // onCollide.clear();
     }
 
     public override function update() {
@@ -43,18 +35,12 @@ class Ship extends Entity {
         currentShootingTimer -= TimeManager.instance.deltaTime;
         if (currentShootingTimer <= 0) 
             currentShootingTimer = 0;
-        // for (l in lasers) {
-            // l.update();
-            // if(l.toDestroy) {
-                // lasers.remove(l);
-                // removeChild(l); 
-                // l.remove(); 
-            // }
-        // }
     }
 
     private function shoot() {
-        if (currentShootingTimer == 0) {
+        if (//currentShootingTimer == 0 &&
+            cast(GameManager.instance.entities.filter(
+            function (e:Entity){return Type.getClass(e) == Laser && e.isActivate;}).length < 100)) {
             currentShootingTimer = shootingCooldown;
             var l = cast(GameManager.instance.entities.filter(
                 function (e:Entity){return Type.getClass(e) == Laser && !e.isActivate;}).first(), Laser);
