@@ -27,23 +27,23 @@ class PhysicManager extends Manager {
         var list2 = GameManager.instance.entities.filter(function (e:Entity) {return e.isActivate;});
 
         for (e1 in list1) {
+            // avoid to check several time a couple
+            list2.remove(list2.first());
             for (e2 in list2) {
                 if (e1 != e2) {
                     if (e1.intersects(e2)) {
-                        e1.onCollisionStay(e2);
-                        e2.onCollisionStay(e1);
-
-                        e1.onCollisionEnter(e2);
-                        e2.onCollisionEnter(e1);
+                        if (!e1.onCollisionStay(e2)){
+                            e1.onCollisionEnter(e2);
+                        }
+                        if (!e2.onCollisionStay(e1)){
+                            e2.onCollisionEnter(e1);
+                        }
                     }
                     else {
                         e1.onCollisionExit(e2);
                         e2.onCollisionExit(e1);
                     }
                 }
-            }
-            if (list2.length > 1) {
-                // list2.remove(e1);
             }
         }
     }

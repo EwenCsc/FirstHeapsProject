@@ -34,23 +34,36 @@ class Laser extends Entity {
         }
     }
 
-    // override function onCollisionEnter(ent : Entity) : Bool {
-    //     if (super.onCollisionEnter(ent)) {
-    //         if(Type.getClass(ent) == Alien) {
-    //             setColliderColor(Color.Red);
-    //         }
-    //         return true;
-    //     }
-    //     return false;
-    // }
-    //
-    // override function onCollisionStay(ent : Entity) : Bool {
-    //     if (super.onCollisionStay(ent)) {
-    //         if(Type.getClass(ent) == Alien) {
-    //             setColliderColor(Color.Red);
-    //         }
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    override function onCollisionEnter(ent : Entity) : Bool {
+        if (super.onCollisionEnter(ent)) {
+            if(Type.getClass(ent) == Alien) {
+                trace ("kool");
+                setColliderColor(Color.Red);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    override function onCollisionStay(ent : Entity) : Bool {
+        if (super.onCollisionStay(ent)) {
+            if(Type.getClass(ent) == Alien) {
+                trace ("koolos");
+                setColliderColor(Color.Yellow);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    override function onCollisionExit(ent : Entity) : Bool {
+        if (super.onCollisionExit(ent)) {
+            if(Type.getClass(ent) == Alien) {
+                trace ("trokool");
+                setColliderColor(Color.Cyan);
+            }
+            return true;
+        }
+        return false;
+    }
 }

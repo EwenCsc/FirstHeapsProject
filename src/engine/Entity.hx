@@ -95,10 +95,12 @@ class Entity extends h2d.Drawable {
 
     public function update() {
         if (!isActivate) return;
+        collidingObjectsThisFrame.clear();
     }
 
     public function onCollisionEnter(_obj : Entity) : Bool {
         if (_obj != this && collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) == null){
+
             collidingObjects.add(_obj);
             collidingObjectsThisFrame.add(_obj);
 
@@ -110,6 +112,7 @@ class Entity extends h2d.Drawable {
 
     public function onCollisionStay(_obj : Entity) : Bool {
         if (_obj != this && collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) != null){
+
             collidingObjectsThisFrame.add(_obj);
 
             onCollisionStayDelegate.invoke();
@@ -129,8 +132,6 @@ class Entity extends h2d.Drawable {
 
             collidingObjects.remove(_obj);
             onCollisionExitDelegate.invoke();
-
-            collidingObjectsThisFrame.clear();
             return true;
         }
         return false;
@@ -183,6 +184,8 @@ class Entity extends h2d.Drawable {
     }
 
     public function deactivate () {
+        collidingObjects.clear();
+        collidingObjectsThisFrame.clear();
         isActivate = false;
     }
 

@@ -19,14 +19,6 @@ class GameManager extends Manager {
 
     private override function new() {
 		super();
-		trace ("Black : " + new h3d.Vector(0, 0, 0, 1).toColor());
-		trace ("Red : " + new h3d.Vector(1, 0, 0, 1).toColor());
-		trace ("Green : " + new h3d.Vector(0, 1, 0, 1).toColor());
-		trace ("Blue : " + new h3d.Vector(0, 0, 1, 1).toColor());
-		trace ("Yellow : " + new h3d.Vector(1, 1, 0, 1).toColor());
-		trace ("Magenta : " + new h3d.Vector(1, 0, 1, 1).toColor());
-		trace ("Cyan : " + new h3d.Vector(0, 1, 1, 1).toColor());
-		trace ("White : " + new h3d.Vector(1, 1, 1, 1).toColor());
     }
 
     public override function init() {
@@ -46,11 +38,11 @@ class GameManager extends Manager {
     public override function update() {
 		super.update();
 		TimeManager.instance.update();
-		PhysicManager.instance.update();
 
 		for(e in entities){
 			e.update();
 		}
+		PhysicManager.instance.update();
         Log.addLog("Laser Instancied : " + entities.filter(function (e:Entity){return Type.getClass(e) == Laser;}).length, 0xFF0000, "laserInstencied");
         Log.addLog("Laser Activated : " + entities.filter(function (e:Entity){return Type.getClass(e) == Laser && e.isActivate;}).length, 0xFF0000, "laserActivated");
 	}

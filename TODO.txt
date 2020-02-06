@@ -1,4 +1,3 @@
-- Collisions (need delegates)
 - Components System :
 	- Colliders
 	- ...
