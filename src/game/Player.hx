@@ -12,9 +12,7 @@ import h2d.col.*;
   */
 class Player extends game.Ship{
      
-    public function new(_parent:h2d.Object) {
-        // var anims = new Map<String, AnimationDatas>();
-        // anims.set("Idle", DataManager.instance.get("SpaceShip"));
+    public function new(_parent:h2d.Object) { 
         super(_parent, DataManager.instance.get("SpaceShip"));
         x = cast(_parent, h2d.Scene).width / 2;
         y = cast(_parent, h2d.Scene).height / 1.2;

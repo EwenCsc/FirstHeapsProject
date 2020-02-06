@@ -12,7 +12,7 @@ import hxd.*;
  */
 class Alien extends Ship{
 
-    var movementFunction : Float -> Void;
+    public var movementFunction(null, default) : Float -> Void;
 
     public function new(_parent:h2d.Object) {
         var anims = new Map<String, AnimationDatas>();
@@ -22,22 +22,26 @@ class Alien extends Ship{
         x = cast(_parent, h2d.Scene).width / 2;
         y = cast(_parent, h2d.Scene).height / 2;
 
-        movementFunction = sin;
+        movementFunction = sinusoid;
     }
 
-    public function sin(f:Float) {
-        y = Math.sin(f);
-        y = getScene().getSize().xMax / 2;
-        x = Math.lerp(getScene().getSize().xMin, getScene().getSize().xMax, f);
+    public function sinusoid(f:Float) {
+        var timeToCross = 5.0;
+
+        x = Math.lerp(0, getScene().width, f / timeToCross);
+        y = (Math.sin(x / 50) * 70) + getScene().getSize().yMax / 2 ;
+
+        if (x >= getScene().width + getBounds().width){
+            deactivate();
+        }
     }
 
-    var timer = 0.0;
+    var timer = 0.0; 
     public override function update() : Bool {
         if (!super.update()) return false;
-        Log.addLog("Alien life : " + life , 0xFF0000, "alienLife");
 
         timer += TimeManager.instance.deltaTime;
-        movementFunction(timer / 600);
+        movementFunction(timer);
 
         if (receiveDamage < receiveDamageCooldown) {
             setAnim("Damaged");
