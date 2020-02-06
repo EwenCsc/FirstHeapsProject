@@ -28,6 +28,7 @@ class DataManager extends Manager{
         animationDatas.set("SpaceShip", new AnimationDatas(Res.spaceship.toTile(), 2, 15)); 
         animationDatas.set("Laser_SpaceShip", new AnimationDatas(Res.laser_spaceship.toTile(), 6, 15));
         animationDatas.set("Alien", new AnimationDatas(Res.alien.toTile(), 4, 10));
+        animationDatas.set("DamagedAlien", new AnimationDatas(Res.alien_damaged.toTile(), 4, 10));
     }
 
     public function get(_key:String) : AnimationDatas {

@@ -23,22 +23,33 @@ class Ship extends Entity {
 
     public var onCollide : Delegate;
 
-    public function new(_parent:h2d.Object, _animDatas:AnimationDatas, _laserAnimDatas:AnimationDatas) {
-        super(_parent, _animDatas);
+    private var receiveDamageCooldown = 0.5;
+    private var receiveDamage = 0.5;
+
+    public function new(_parent:h2d.Object, ?_animations : Map<String, AnimationDatas>, ?_animDatas:AnimationDatas) {
+        super(_parent, _animations, _animDatas);
         life = 10;
-        laserAnimationData = _laserAnimDatas;
         shootingCooldown = 0.1;
         currentShootingTimer = 0;
     }
 
-    public override function update() {
+    public override function update() : Bool {
+        receiveDamage += TimeManager.instance.deltaTime;
+        if (!super.update()) return false;
 
-        super.update();
         currentShootingTimer -= TimeManager.instance.deltaTime;
         if (currentShootingTimer <= 0) 
             currentShootingTimer = 0;
         if (life <= 0)
             deactivate();
+
+        if (receiveDamage < receiveDamageCooldown) {
+            setColliderColor(Color.Red);
+        }
+        else {
+            setColliderColor(Color.Green);
+        }
+        return true;
     }
 
     private function shoot() {
@@ -50,7 +61,7 @@ class Ship extends Entity {
             var l = cast(GameManager.instance.entities.getFirst(
                 function (e:Entity){return Type.getClass(e) == Laser && !e.isActivate;}), Laser);
             if (l == null){
-                l = new Laser(getScene(), localPosition, laserAnimationData, this);
+                l = new Laser(getScene(), localPosition, DataManager.instance.get("Laser_SpaceShip"), this);
                 // lasers.add(l);
                 GameManager.instance.entities.add(l);
             }
@@ -64,14 +75,19 @@ class Ship extends Entity {
         }
     }
 
-    public function receiveDamage(_damage:Float) {
-        
-    }
-
     override function onCollisionEnter(ent : Entity) : Bool {
         if (super.onCollisionEnter(ent)) {
-            if(Type.getClass(ent) == Alien) {
-                life--;
+            if(Type.getClass(ent) == Laser) {
+                var l = cast(ent, Laser);
+                if(l.owner != this){
+                    life--;
+                    if (life <= 0){
+                        setColliderColor(Color.White);
+                    }
+                    else{
+                        receiveDamage = 0;
+                    }
+                }
             }
             return true;
         }

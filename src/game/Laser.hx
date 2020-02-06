@@ -1,5 +1,6 @@
 package game;
 
+import format.agal.Data;
 import engine.engine_helpers.Color;
 import format.swf.Data.FontKerningData;
 import hxd.snd.openal.ReverbDriver;
@@ -17,50 +18,29 @@ class Laser extends Entity {
         return owner;
     }
 
-    public function new(_parent:h2d.Object, origin:h2d.col.Point, _animDatas:AnimationDatas, _owner:Object) {
-        super(_parent, _animDatas);
+    public function new(_parent:h2d.Object, origin:h2d.col.Point, ?_animations : Map<String, AnimationDatas>, ?_animDatas:AnimationDatas, _owner:Object) {
+        super(_parent, _animations, _animDatas);
         x = origin.x;
         y = origin.y;
         owner = _owner;
     }
 
-    override function update() {
-        super.update();
+    override function update() : Bool {
+        if (!super.update()) return false;
         y -= 5;
 
         // Destruction
         if (y < 100) {
             deactivate();
         }
+        return true;
     }
 
     override function onCollisionEnter(ent : Entity) : Bool {
         if (super.onCollisionEnter(ent)) {
             if(Type.getClass(ent) == Alien) {
-                trace ("kool");
                 setColliderColor(Color.Red);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    override function onCollisionStay(ent : Entity) : Bool {
-        if (super.onCollisionStay(ent)) {
-            if(Type.getClass(ent) == Alien) {
-                trace ("koolos");
-                setColliderColor(Color.Yellow);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    override function onCollisionExit(ent : Entity) : Bool {
-        if (super.onCollisionExit(ent)) {
-            if(Type.getClass(ent) == Alien) {
-                trace ("trokool");
-                setColliderColor(Color.Cyan);
+                deactivate();
             }
             return true;
         }

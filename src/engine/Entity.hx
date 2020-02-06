@@ -18,7 +18,6 @@ class Entity extends h2d.Drawable {
     private var collidingObjects : List<Entity>;
     private var collidingObjectsThisFrame : List<Entity>;
 
-    private var drawable : h2d.Drawable;
     private var velocity : h2d.col.Point;
     
     public var localPosition(get, set) : h2d.col.Point;
@@ -31,28 +30,52 @@ class Entity extends h2d.Drawable {
     public var onCollisionStayDelegate : Delegate;
     public var onCollisionExitDelegate : Delegate;
 
-    public function new(_parent:h2d.Object, _animDatas:AnimationDatas) {
-        // try {
-        //     cast(_parent, h2d.Scene);
-        //     throw "Attention le parent de l'entité n'est pas une Scene";
-        // }
-        // try {
-        //     cast(_parent, h2d.Drawable);
-        //     throw "Attention le parent de l'entité n'est pas un Drawble, il ne va pas s'afficher ...";
-        // }
+    private var animations : Map<String, Anim>;
+    private var currentAnimKey : String;
+
+    public function new(_parent:h2d.Object, ?_animations : Map<String, AnimationDatas>, ?_animDatas:AnimationDatas) {
+        if (_animDatas == null && _animations == null && Lambda.count(_animations) > 0) return;
         super(_parent);
         parent = _parent;
 
-        initGraphic(_animDatas);
-
+        // if (_animDatas != null) {
+        //     initGraphic(_animDatas);
+        // }
+        //
+        // if (_animations != null && Lambda.count(_animations) > 0) {
+        //     animations = _animations;
+        //     if (_animDatas == null){
+                // initGraphic(animations.getFirst());
+        //         currentAnim = animations.firstKey();
+        //     }
+        // }
+        initGraphics(_animations, _animDatas);
         init();
+
+        // Debug Colliders
+        setColliderColor(Color.Green);
     }
 
-    private function initGraphic (_animDatas:AnimationDatas) {
+    private  function initGraphics(?_animations : Map<String, AnimationDatas>, ?_animDatas:AnimationDatas) {
+        if (_animDatas == null && _animations == null) return;
+        animations = new Map<String, Anim>();
+        
+        if (_animations != null){
+            for (animK in _animations.keys()) {
+                animations.set(animK, initGraphic(_animations[animK]));
+                animations[animK].visible = false;
+            }
+        }
+        else {
+            animations.set("Idle", initGraphic(_animDatas));
+        }
+        currentAnimKey = animations.firstKey();
+        animations[currentAnimKey].visible = true;
+    }
 
+    private function initGraphic (_animDatas:AnimationDatas) : Anim{
         /** Parsing To set drawable as Anim or just Bitmap */
         if (_animDatas.nbSprite > 0) {
-
             // Init sprites array
             var anims:Array<h2d.Tile> = [];
             // dimensions
@@ -72,17 +95,16 @@ class Entity extends h2d.Drawable {
              * parent = this to have this as parent ... 
              * !...Well done Ewen you're a genius
              **/ 
-            drawable = new h2d.Anim(anims, _animDatas.animSpeed, this);
+            return new h2d.Anim(anims, _animDatas.animSpeed, this);
         }
         // No Anim so just get spriteSheet as a simple sprite
         else {
             var btm = new h2d.Bitmap(_animDatas.spriteSheet, this);
-            btm.tile.setCenterRatio();
-            drawable = btm;
+            var anims:Array<h2d.Tile> = [];
+            _animDatas.spriteSheet.setCenterRatio();
+            anims.push(_animDatas.spriteSheet);
+            return new h2d.Anim(anims, 0, this);
         }
-        
-        // Debug Colliders
-        setColliderColor(Color.Green);
     }
 
     public function init() {
@@ -93,9 +115,10 @@ class Entity extends h2d.Drawable {
         onCollisionExitDelegate = new Delegate();
     }
 
-    public function update() {
-        if (!isActivate) return;
+    public function update() : Bool {
+        if (!isActivate) return false;
         collidingObjectsThisFrame.clear();
+        return true;
     }
 
     public function onCollisionEnter(_obj : Entity) : Bool {
@@ -121,10 +144,6 @@ class Entity extends h2d.Drawable {
         return false;
     }
 
-    /**
-     * todo : Corect this!!
-     * [Don't use! still bugged!]
-     */
     public function onCollisionExit(_obj : Entity) : Bool {
         if (_obj != this && 
             collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) != null &&
@@ -182,14 +201,24 @@ class Entity extends h2d.Drawable {
     private function resetValues() {
         isActivate = true;
     }
-
+    
     public function deactivate () {
+        visible = false;
         collidingObjects.clear();
         collidingObjectsThisFrame.clear();
         isActivate = false;
     }
 
     public function activate() {
+        visible = true;
         resetValues();
+    }
+
+    private function setAnim(_key : String) {
+        if (!animations.exists(_key) || currentAnimKey == _key) return;
+
+        animations[currentAnimKey].visible = false;
+        animations[_key].visible = true;
+        currentAnimKey = _key;
     }
 }
