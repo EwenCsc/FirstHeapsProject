@@ -13,7 +13,7 @@ import h2d.Object;
  */
 class Entity extends h2d.Drawable {
     
-    public var isActivate = true;
+    public var isActivate (default, null) = true;
 
     private var collidingObjects : List<Entity>;
     private var collidingObjectsThisFrame : List<Entity>;
@@ -98,7 +98,7 @@ class Entity extends h2d.Drawable {
     }
 
     public function onCollisionEnter(_obj : Entity) : Bool {
-        if (_obj != this && collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() == null){
+        if (_obj != this && collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) == null){
             collidingObjects.add(_obj);
             collidingObjectsThisFrame.add(_obj);
 
@@ -109,7 +109,7 @@ class Entity extends h2d.Drawable {
     }
 
     public function onCollisionStay(_obj : Entity) : Bool {
-        if (_obj != this && collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() != null){
+        if (_obj != this && collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) != null){
             collidingObjectsThisFrame.add(_obj);
 
             onCollisionStayDelegate.invoke();
@@ -118,10 +118,14 @@ class Entity extends h2d.Drawable {
         return false;
     }
 
+    /**
+     * todo : Corect this!!
+     * [Don't use! still bugged!]
+     */
     public function onCollisionExit(_obj : Entity) : Bool {
         if (_obj != this && 
-            collidingObjects.filter(function (e:Entity){ return e == _obj; }).first() != null &&
-            collidingObjectsThisFrame.filter(function (e:Entity){ return e == _obj; }).first() == null){
+            collidingObjects.getFirst(function (e:Entity){ return e == _obj; }) != null &&
+            collidingObjectsThisFrame.getFirst(function (e:Entity){ return e == _obj; }) == null){
 
             collidingObjects.remove(_obj);
             onCollisionExitDelegate.invoke();
@@ -174,7 +178,15 @@ class Entity extends h2d.Drawable {
         return getBounds().intersects(ent.getBounds());
     }
 
-    public function resetValues() {
-        
+    private function resetValues() {
+        isActivate = true;
+    }
+
+    public function deactivate () {
+        isActivate = false;
+    }
+
+    public function activate() {
+        resetValues();
     }
 }
