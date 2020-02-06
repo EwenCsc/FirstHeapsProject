@@ -1,8 +1,10 @@
+Doing :
+	- Moving
+
 - Components System :
 	- Colliders
 	- ...
 - alien's behaviour : 
-	- Moving
  	- Shooting
  	- Wave
 - Background (paralax)

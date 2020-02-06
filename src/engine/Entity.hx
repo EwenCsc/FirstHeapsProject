@@ -38,17 +38,6 @@ class Entity extends h2d.Drawable {
         super(_parent);
         parent = _parent;
 
-        // if (_animDatas != null) {
-        //     initGraphic(_animDatas);
-        // }
-        //
-        // if (_animations != null && Lambda.count(_animations) > 0) {
-        //     animations = _animations;
-        //     if (_animDatas == null){
-                // initGraphic(animations.getFirst());
-        //         currentAnim = animations.firstKey();
-        //     }
-        // }
         initGraphics(_animations, _animDatas);
         init();
 
