@@ -3,6 +3,7 @@
 -cp src
 -cp src/engine
 -cp src/haxe_helper
+-cp src/engine/engine_helpers
 -cp src/engine/managers
 -D analyzer-optimize
 -main Main

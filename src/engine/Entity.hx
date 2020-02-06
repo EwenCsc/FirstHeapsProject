@@ -1,5 +1,6 @@
 package engine;
 
+import engine.engine_helpers.Color;
 import haxe_helper.Delegate;
 import h2d.col.Bounds;
 import engine.*;
@@ -81,7 +82,7 @@ class Entity extends h2d.Drawable {
         }
         
         // Debug Colliders
-        setColliderColor(new h3d.Vector(0, 1, 0, 1).toColor());
+        setColliderColor(Color.Green);
     }
 
     public function init() {
@@ -171,5 +172,9 @@ class Entity extends h2d.Drawable {
 
     public function intersects(ent : Entity):Bool {
         return getBounds().intersects(ent.getBounds());
+    }
+
+    public function resetValues() {
+        
     }
 }

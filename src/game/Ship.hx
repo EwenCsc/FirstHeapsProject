@@ -1,5 +1,6 @@
 package game;
 
+import engine.engine_helpers.Color;
 import game.*;
 import engine.*;
 import engine.managers.*;
@@ -38,7 +39,7 @@ class Ship extends Entity {
     }
 
     private function shoot() {
-        if (//currentShootingTimer == 0 &&
+        if (currentShootingTimer == 0 &&
             cast(GameManager.instance.entities.filter(
             function (e:Entity){return Type.getClass(e) == Laser && e.isActivate;}).length < 100)) {
             currentShootingTimer = shootingCooldown;
@@ -54,6 +55,7 @@ class Ship extends Entity {
                 l.y = localPosition.y;
                 l.owner = this;
                 l.isActivate = true;
+                l.setColliderColor(Color.Green);
             }
         }
     }

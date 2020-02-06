@@ -1,4 +1,7 @@
 - Collisions (need delegates)
+- Components System :
+	- Colliders
+	- ...
 - alien's behaviour : 
 	- Moving
  	- Shooting

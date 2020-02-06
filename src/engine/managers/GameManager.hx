@@ -18,7 +18,15 @@ class GameManager extends Manager {
 	public var entities(default, null): List<Entity>;
 
     private override function new() {
-        super();
+		super();
+		trace ("Black : " + new h3d.Vector(0, 0, 0, 1).toColor());
+		trace ("Red : " + new h3d.Vector(1, 0, 0, 1).toColor());
+		trace ("Green : " + new h3d.Vector(0, 1, 0, 1).toColor());
+		trace ("Blue : " + new h3d.Vector(0, 0, 1, 1).toColor());
+		trace ("Yellow : " + new h3d.Vector(1, 1, 0, 1).toColor());
+		trace ("Magenta : " + new h3d.Vector(1, 0, 1, 1).toColor());
+		trace ("Cyan : " + new h3d.Vector(0, 1, 1, 1).toColor());
+		trace ("White : " + new h3d.Vector(1, 1, 1, 1).toColor());
     }
 
     public override function init() {
