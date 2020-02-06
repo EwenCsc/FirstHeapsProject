@@ -53,17 +53,14 @@ class Ship extends Entity {
     }
 
     private function shoot() {
-        if (currentShootingTimer == 0 &&
-                cast(GameManager.instance.entities.filter(
-                function (e:Entity){return Type.getClass(e) == Laser && e.isActivate;}).length < 100)) {
+        if (currentShootingTimer == 0) {
 
-            currentShootingTimer = shootingCooldown;
-            var l = cast(GameManager.instance.entities.getFirst(
-                function (e:Entity){return Type.getClass(e) == Laser && !e.isActivate;}), Laser);
+            currentShootingTimer += shootingCooldown;
+            var l = cast(EntityManager.instance.getFirstEntityOfType(Laser, false), Laser);
+            trace(l);
             if (l == null){
                 l = new Laser(getScene(), localPosition, DataManager.instance.get("Laser_SpaceShip"), this);
-                // lasers.add(l);
-                GameManager.instance.entities.add(l);
+                EntityManager.instance.add(l);
             }
             else {
                 l.x = localPosition.x;
@@ -92,5 +89,10 @@ class Ship extends Entity {
             return true;
         }
         return false;
+    }
+
+    private override function resetValues(){
+        super.resetValues();
+        life = 10;
     }
 }

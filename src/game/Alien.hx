@@ -51,4 +51,11 @@ class Alien extends Ship{
         }
         return true;
     }
+
+    private override function resetValues(){
+        super.resetValues();
+        timer = 0;
+        x = 100;
+        y = 100;
+    }
 }

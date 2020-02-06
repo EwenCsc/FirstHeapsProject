@@ -24,7 +24,7 @@ class Entity extends h2d.Drawable {
     public var globalPosition(get, null) : h2d.col.Point;
 
     private static var colliderDebug : Bool = true;
-    private var colliderRectangle : Drawable;
+    private var colliderRectangle : Drawable = null;
 
     public var onCollisionEnterDelegate : Delegate;
     public var onCollisionStayDelegate : Delegate;
@@ -145,6 +145,7 @@ class Entity extends h2d.Drawable {
         return false;
     }
 
+    var btmtmp : Bitmap;
     public function setColliderColor(_color : Int) {
         if (colliderDebug) {
             var thickness = 1;
@@ -157,9 +158,9 @@ class Entity extends h2d.Drawable {
             bmpd.fill(0, 0,             thickness, h, _color); // Left
             bmpd.fill(w - thickness, 0, thickness, h, _color); // Right
 
-            var btm = new Bitmap(Tile.fromBitmap(bmpd), this);
-            btm.tile.setCenterRatio();
-            colliderRectangle = btm;
+            var btmtmp : Bitmap = new Bitmap(Tile.fromBitmap(bmpd), this);
+            btmtmp.tile.setCenterRatio();
+            colliderRectangle = btmtmp;
             bmpd.dispose();
         }
     }
