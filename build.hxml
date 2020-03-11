@@ -8,4 +8,3 @@
 -D analyzer-optimize
 -main Main
 -hl main.hl
-# --interp

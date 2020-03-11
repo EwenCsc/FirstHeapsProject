@@ -1,5 +1,6 @@
 package engine.managers;
 
+import game.Alien;
 import engine.managers.EntityManager;
 import engine.Entity;
 import engine.managers.GameManager;
@@ -24,9 +25,10 @@ class PhysicManager extends Manager {
     }
 
     public override function update() {
-        var list1 = EntityManager.instance.getEntitiesOfType(Entity, true);
+        var list1 = EntityManager.instance.getEntitiesOfType(Alien, true);
         var list2 = EntityManager.instance.getEntitiesOfType(Entity, true);
-        trace(list1.length);
+        trace("list1 " + list1.length);
+        trace("list2 " + list2.length);
 
         for (e1 in list1) {
             // avoid to check several time a couple

@@ -47,15 +47,16 @@ class AlienSpawner extends Object {
 
     private function spawn() {
         var e = EntityManager.instance.getFirstEntityOfType(Alien, false);
+        var l : Alien;
         if(e != null){
-            var l  = cast(e, Alien);
+            l  = cast(e, Alien);
             l.activate();
-            l.movementFunction = l.sinusoid;
         }
         else {
-            var l = new Alien(Main.currentScene);
-            l.movementFunction = l.sinusoid;
+            l = new Alien(Main.currentScene);
             EntityManager.instance.add(l);
         }
+        l.movementFunction = l.sinusoid;
+        l.sinusoid(0);
     }
 }

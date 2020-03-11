@@ -1,9 +1,3 @@
-# Haxe project
+# Schmeaps
 
-This is an example Haxe project scaffolded by Visual Studio Code.
-
-Without further changes the structure is following:
-
- * `src/Main.hx`: Entry point Haxe source file
- * `build.hxml`: Haxe command line file used to build the project
- * `README.md`: This file
+Schmeaps is a Shoot'em'up to try and learn the [Heaps Framework](https://heaps.io/) with the [Haxe Langage](https://haxe.org/).
